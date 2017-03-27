@@ -104,6 +104,7 @@ WARNING
         install_bundler_in_app
         build_bundler("development:test")
         post_bundler
+        run_pre_deploy_script
         create_database_yml
         install_binaries
         run_assets_precompile_rake_task
@@ -676,6 +677,13 @@ https://devcenter.heroku.com/articles/ruby-versions#your-ruby-version-is-x-but-y
       else
         ""
       end
+    end
+  end
+
+  def run_pre_deploy_script
+    instrument 'ruby.run_pre_deploy_script' do
+      topic("Running Predeploy")
+      run("ruby ./predeploy.rb")
     end
   end
 
